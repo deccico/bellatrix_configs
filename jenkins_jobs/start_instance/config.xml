@@ -1,1 +1,36 @@
-/var/lib/jenkins/jobs/start instance/config.xml
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>true</keepDependencies>
+  <properties/>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers class="vector"/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>virtualenv --no-site-packages env
+</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>. env/bin/activate
+pip install bellatrix 
+bellatrix --version</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>. env/bin/activate 
+bellatrix start_instance ami-6fa27506 elasticbamboo</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.tasks.ArtifactArchiver>
+      <artifacts>start_instance_out</artifacts>
+      <latestOnly>false</latestOnly>
+    </hudson.tasks.ArtifactArchiver>
+  </publishers>
+  <buildWrappers/>
+</project>
