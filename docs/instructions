@@ -1,0 +1,109 @@
+#Launching and configuring your Ubuntu box
+#
+#start setting your environment
+#
+#install Python Package Installer
+#sudo apt-get install python-pip
+#upgrade PIP itself
+#sudo pip install pip --upgrade
+#install Green Unicorn
+#install Virtualenv to generate our own isolated environment
+#sudo pip install virtualenv
+#Installing NGINX
+#sudo apt-get install nginx
+#Creating our Virtualenv environment
+#virtualenv --no-site-packages django_app
+#cd django_app
+#activating the environment
+#source bin/activate
+#installing Green Unicorn and Django
+#pip install django gunicorn
+#Creating a Django project
+#django-admin.py startproject app
+#cd app
+#start Django application with Green Unicorn
+#gunicorn_django -b 0.0.0.0:8000
+#
+#
+
+
+#---------------------------------------
+#Setting up Nginx
+#
+#prepare directories
+#sudo mkdir -p /opt/django/logs/nginx/
+#Create directories and softlinks for static content and templates
+#mkdir $HOME/django_app/static
+#mkdir $HOME/django_app/templates
+#sudo ln -s $HOME/django_app/static /opt/django
+#download and set up Nginx configuration. Basically it will listen in port 80 and forward to port 8000 dynamic content
+sudo mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.backup
+wget https://bitbucket.org/deccico/django_gunicorn/raw/tip/server/etc/nginx/sites-available/default
+sudo cp default /etc/nginx/sites-available/default
+
+#
+#---------------------------------------
+#
+#
+#Testing Static resources
+#
+#Configuring settings.py
+#
+#You need to tell Django where your templates are, for that reason, add your absolute
+#“templates” directory to your /home/ubuntu/django_app/app/settings.py file
+#Now look for the TEMPLATE_DIRS section and add your template directory
+#
+#TEMPLATE_DIRS = (
+# Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+# Always use forward slashes, even on Windows.
+# Don't forget to use absolute paths, not relative paths.
+#'/home/ubuntu/django_app/templates',
+#)
+#
+#
+#Configuring urls.py
+#
+#/home/ubuntu/django_app/app/urls.py will help us telling Django to return our template
+#page when we introduce the /test_static request.
+#To make things easier we are using a dynamic view:
+#
+#from django.conf.urls.defaults import patterns
+#from django.views.generic.simple import direct_to_template
+# 
+#urlpatterns = patterns('',
+#(r'^test_static/$',             direct_to_template, {'template': 'test_static.html'}),
+#)
+#
+#
+#-----------------------------------------------------------
+#
+#Preparing test template
+#
+#
+#We need to prepare our template. Please create this file /home/ubuntu/django_app/templates/test_static.html with the following content:
+#?
+#
+#
+#<!--Load static will recover the static prefix variable and saving it in STATIC_PREFIX. We do this only once.-->
+#{% load static %}
+#{% get_static_prefix as STATIC_PREFIX %}
+#<!--Here we are just showing how easy is to recover static resources . -->
+#Test image
+#<img src="{{ STATIC_PREFIX }}django.png" />
+#
+#
+#--------------------------------------------------------------
+#
+#Restarting Nginx and voilà
+#
+#First we restart Nginx
+# 
+#sudo service nginx restart
+#
+#Now we will start our Django application again:
+#    
+#cd /home/ubuntu/django_app/app
+#activating the environment
+#source ../bin/activate
+#start Django application with Green Unicorn
+#gunicorn_django -b 0.0.0.0:8000
