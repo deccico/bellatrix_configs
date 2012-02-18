@@ -35,6 +35,7 @@ def pip_install(package, prefix="sudo", verify=True, verification_command=None):
     cmds = [prefix + " pip install " + package + " --upgrade"]
     if verification_command:
         cmds.append(package + " --version" if verification_command == None else verification_command)
+    logging.info("cmd generated: %s" % cmds)
     return cmds
 
 def createVirtualEnv(env_name):
@@ -52,6 +53,7 @@ def installPackageInVirtualEnv(env, package, verify=True, verification_command=N
     for c in cmds:
         cmd += c + ampersand 
     cmd = cmd[:len(cmd) - len(ampersand)]   #cut last &&
+    logging.info("cmd generated: %s" % cmd)
     return executeInVirtualEnv(env, cmd) 
 
 install_pip = [
