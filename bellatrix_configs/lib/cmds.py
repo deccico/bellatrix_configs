@@ -28,7 +28,7 @@ apt_get_install = apt_prefix + apt_install
 
 
 def apt_get_install(package):
-    return [apt_get_install + "package"]
+    return [apt_get_install + package]
 
 def pip_install(package, prefix="sudo", verify=True, verification_command=None):
     cmds = [prefix + " pip install " + package + " --upgrade"]
