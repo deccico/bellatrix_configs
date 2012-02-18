@@ -61,10 +61,9 @@ def installPackageInVirtualEnv(env, package, verify=True, verification_command=N
     cmd = flatCommands(cmds)
     return executeInVirtualEnv(env, cmd) 
 
-install_pip = [
-               apt_get_install("python-pip"),
-               pip_install("pip")    #why? to upgrade pip package using pip itself
-               ]
+install_pip = apt_get_install("python-pip") 
+install_pip += pip_install("pip")    #we need to upgrade pip package using pip itself
+               
 
 apt_get_update = [
                   apt_get_and_options + "update"
