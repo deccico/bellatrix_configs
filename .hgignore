@@ -16,3 +16,4 @@ syntax: regexp
 syntax: regexp
 ^\.p.*$
 jenkins_jobs/02-provision instance/nextBuildNumber
+build*

@@ -35,7 +35,6 @@ def pip_install(package, prefix="sudo", verify=True, verification_command=None):
     cmds = [prefix + " pip install " + package + " --upgrade"]
     if verification_command:
         cmds.append(package + " --version" if verification_command == None else verification_command)
-    logging.info("pip_install cmd generated: %s" % cmds)
     return cmds
 
 def createVirtualEnv(env_name):
