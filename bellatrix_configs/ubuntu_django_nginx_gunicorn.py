@@ -29,16 +29,16 @@ django_app_dir = "/home/ubuntu/django_app"
 
 def configureNginx():
     #prepare directories
-    cmds = ["sudo mkdir -p /opt/django/logs/nginx/"]
+    commands = ["sudo mkdir -p /opt/django/logs/nginx/"]
     #Create directories and softlinks for static content and templates
-    cmds.append("mkdir $HOME/django_app/static")
-    cmds.append("mkdir $HOME/django_app/templates")
-    cmds.append("sudo ln -s $HOME/django_app/static /opt/django")
+    commands.append("mkdir $HOME/django_app/static")
+    commands.append("mkdir $HOME/django_app/templates")
+    commands.append("sudo ln -s $HOME/django_app/static /opt/django")
     #download and set up Nginx configuration. Basically it will listen in port 80 and forward to port 8000 dynamic content
-    cmds.append("sudo mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.backup")
-    cmds += cmds.wget("https://bitbucket.org/deccico/django_gunicorn/raw/tip/server/etc/nginx/sites-available/default")
-    cmds.append("sudo cp default /etc/nginx/sites-available/default")
-    return cmds
+    commands.append("sudo mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.backup")
+    commands += cmds.wget("https://bitbucket.org/deccico/django_gunicorn/raw/tip/server/etc/nginx/sites-available/default")
+    commands.append("sudo cp default /etc/nginx/sites-available/default")
+    return commands
 
 
 #list of cmds to execute
