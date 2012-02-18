@@ -28,16 +28,14 @@ project_name = "app"
 django_app_dir = "/home/ubuntu/django_app"
 
 def configureNginx():
-    cmds = [
-            #prepare directories
-            "sudo mkdir -p /opt/django/logs/nginx/", 
-            #Create directories and softlinks for static content and templates
-            + "mkdir $HOME/django_app/static",
-            + "mkdir $HOME/django_app/templates",
-            + "sudo ln -s $HOME/django_app/static /opt/django",
-            #download and set up Nginx configuration. Basically it will listen in port 80 and forward to port 8000 dynamic content
-            + "sudo mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.backup"
-            ]
+    #prepare directories
+    cmds = ["sudo mkdir -p /opt/django/logs/nginx/"]
+    #Create directories and softlinks for static content and templates
+    cmds.append("mkdir $HOME/django_app/static")
+    cmds.append("mkdir $HOME/django_app/templates")
+    cmds.append("sudo ln -s $HOME/django_app/static /opt/django")
+    #download and set up Nginx configuration. Basically it will listen in port 80 and forward to port 8000 dynamic content
+    cmds.append("sudo mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.backup")
     cmds += cmds.wget("https://bitbucket.org/deccico/django_gunicorn/raw/tip/server/etc/nginx/sites-available/default")
     cmds.append("sudo cp default /etc/nginx/sites-available/default")
     return cmds
