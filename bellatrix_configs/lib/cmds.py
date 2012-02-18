@@ -83,7 +83,7 @@ def wget(url, dest=None):
     return ["wget --no-check-certificate " + url + "" if dest == None else " " + dest]
 
 def sudo(cmds):
-    for i in range(cmds):
+    for i in range(len(cmds)):
         cmds[i] = "sudo " + cmds[i]
     return cmds
 
