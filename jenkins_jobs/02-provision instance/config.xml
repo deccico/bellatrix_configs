@@ -12,8 +12,14 @@
   <triggers class="vector"/>
   <concurrentBuild>false</concurrentBuild>
   <builders>
+    <hudson.plugins.copyartifact.CopyArtifact>
+      <projectName>01-start instance</projectName>
+      <filter>*_out</filter>
+      <target></target>
+      <selector class="hudson.plugins.copyartifact.StatusBuildSelector"/>
+    </hudson.plugins.copyartifact.CopyArtifact>
     <hudson.tasks.Shell>
-      <command>virtualenv --no-site-packages env
+      <command>virtualenv --no-site-packages --clear env
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
@@ -21,14 +27,19 @@
 pip install bellatrix 
 bellatrix --version</command>
     </hudson.tasks.Shell>
-    <hudson.tasks.Shell>
-      <command>. env/bin/activate 
-bellatrix start_instance ami-6fa27506 elasticbamboo</command>
-    </hudson.tasks.Shell>
+    <hudson.plugins.python.Python>
+      <command>import os
+
+host = open(&quot;start_instance_out&quot;).read().split(&quot;,&quot;)[1].strip()
+cmd = &quot;. env/bin/activate&quot;
+cmd += &quot;&amp;&amp; bellatrix provision %s %s %s&quot; % (&quot;bellatrix-configs/ubuntu_django_nginx_gunicorn.py&quot;, &quot;ubuntu&quot;, host)
+print &quot;executing &quot; + cmd
+os.system(cmd)</command>
+    </hudson.plugins.python.Python>
   </builders>
   <publishers>
     <hudson.tasks.ArtifactArchiver>
-      <artifacts>start_instance_out</artifacts>
+      <artifacts>provision_out</artifacts>
       <latestOnly>false</latestOnly>
     </hudson.tasks.ArtifactArchiver>
   </publishers>

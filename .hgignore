@@ -1,0 +1,18 @@
+jenkins_jobs/start_instance/workspace
+syntax: regexp
+^jenkins_jobs/start_instance/builds$
+syntax: regexp
+^jenkins_jobs/start_instance/lastStable$
+syntax: regexp
+^jenkins_jobs/start_instance/lastSuccessful$
+jenkins_jobs/start_instance/nextBuildNumber
+jenkins_jobs/02-provision instance/workspace
+jenkins_jobs/02-provision instance/builds
+jenkins_jobs/01-start instance/workspace
+jenkins_jobs/01-start instance/builds
+jenkins_jobs/01-start instance/l*
+syntax: regexp
+^.*\.pyc$
+syntax: regexp
+^\.p.*$
+jenkins_jobs/02-provision instance/nextBuildNumber

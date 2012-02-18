@@ -19,7 +19,7 @@ instance_type = "t1.micro"          #type of instance that will be used for appl
 
 
 #------------------------------------------------------------------------------------------------
-from bellatrix-configs.lib import cmds
+from bellatrix_configs.lib import cmds
 
 env = "django_app"
 project_name = "app"
