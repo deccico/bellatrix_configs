@@ -40,7 +40,7 @@ bellatrix --version</command>
 
 host = open(&quot;start_instance_out&quot;).read().split(&quot;,&quot;)[1].strip()
 cmd = &quot;. bellatrix_configs/bin/activate&quot;
-cmd += &quot;&amp;&amp; bellatrix provision %s %s %s&quot; % (&quot;bellatrix_configs/ubuntu_django_nginx_gunicorn.py&quot;, &quot;ubuntu&quot;, host)
+cmd += &quot;&amp;&amp; bellatrix provision %s %s %s --private_key %s&quot; % (&quot;bellatrix_configs/ubuntu_django_nginx_gunicorn.py&quot;, &quot;ubuntu&quot;, host, &quot;~/.bellatrix/ec2.pk&quot;)
 print &quot;executing &quot; + cmd
 os.system(cmd)</command>
     </hudson.plugins.python.Python>

@@ -1,6 +1,8 @@
 """This configuration holds the list of cmds that are going to be applied to a list of ami's. 
 This is part of the normal Bellatrix process. The new configuration will be burned into a new ami."""
 
+
+import logging
 import os
 
 #list of ami's to process with the below cmds
@@ -67,3 +69,6 @@ commands += cmds.wget("https://bitbucket.org/deccico/django_gunicorn/raw/tip/run
 commands += cmds.chmod("a+x", django_app_dir + "/run.sh")
 commands += cmds.sudo(cmds.wget("https://bitbucket.org/deccico/django_gunicorn/raw/tip/server/etc/init/django_app.conf",
                       "/etc/init/django_app.conf"))
+
+logging.info("commands generated: %s" % commands)
+
