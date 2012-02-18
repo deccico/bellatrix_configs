@@ -33,7 +33,7 @@ def apt_get_install(package):
 def pip_install(package, prefix="sudo", verify=True, verification_command=None):
     cmds = [prefix + " pip install " + package + " --upgrade"]
     if verification_command:
-        cmds += package + " --version" if verification_command == None else verification_command
+        cmds.append(package + " --version" if verification_command == None else verification_command)
     return cmds
 
 def createVirtualEnv(env_name):
@@ -46,7 +46,7 @@ def installPackageInVirtualEnv(env, package, verify=True, verification_command=N
     cmds = pip_install(package, prefix, verify, verification_command) 
     cmd = ""
     ampersand = " && "
-    #we need to get a single command so the work in the virtual environment
+    #we need to get a single command so it works in the virtual environment
     for c in cmds:
         cmd += c + ampersand 
     cmd = cmd[:len(cmd) - len(ampersand)]   #cut last &&
