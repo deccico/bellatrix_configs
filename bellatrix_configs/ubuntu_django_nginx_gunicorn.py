@@ -50,7 +50,7 @@ commands += cmds.install_nginx
 commands += cmds.createVirtualEnv(env) 
 commands += cmds.installPackageInVirtualEnv(env, package="django", verification_command="django-admin.py --version")
 commands += cmds.installPackageInVirtualEnv(env, package="gunicorn")
-commands += cmds.executeInVirtualEnv(env, cmds.create_django_project(project_name, dir=env + os.path.sep))
+commands += cmds.executeInVirtualEnv(env, cmds.create_django_project(project_name, dir_name=env + os.path.sep))
 commands += configureNginx()
 
 #setting up Django app
