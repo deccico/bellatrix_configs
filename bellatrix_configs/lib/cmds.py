@@ -17,7 +17,9 @@ Should something happened to the operation, 'cat new_file' will fail.
 Additionally you will be able to verify the content of the file.               
 """
 
-CONSTANTS
+import os
+
+#CONSTANTS
 #http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=422427
 apt_prefix = "export PATH=$PATH:/sbin:/usr/sbin:/usr/local/sbin;export TERM=linux; "
 apt_get_and_options = "sudo /usr/bin/apt-get -q -y -o DPkg::Options::=--force-confold --fix-missing " 
@@ -30,12 +32,12 @@ def apt_get_install(package):
 
 def pip_install(package, prefix="sudo", verify=True, verification_command=None):
     cmds = [prefix + " pip install " + package + " --upgrade"]
-    if command_verification:
-        cmds += package + " --version" if verification_command == None else command_verification
+    if verification_command:
+        cmds += package + " --version" if verification_command == None else verification_command
     return cmds
 
 def createVirtualEnv(env_name):
-    cmds = ["virtualenv --no-site-packages " + env_name]
+    return ["virtualenv --no-site-packages " + env_name]
 
 def executeInVirtualEnv(env, cmd):
     return ["source " + env + os.path.sep + "bin" + os.path.sep + "activate && " + cmd] 
@@ -64,8 +66,8 @@ install_nginx = ["sudo add-apt-repository ppa:nginx/stable -y"] \
                 + apt_get_update \
                 + apt_get_install("nginx")
                 
-def create_django_project(project_name, dir="." + os.path.sep):                
-    return ["cd " + dir + " && django-admin.py startproject " + project_name]
+def create_django_project(project_name, dir_name="." + os.path.sep):                
+    return ["cd " + dir_name + " && django-admin.py startproject " + project_name]
 
 def wget(url, dest=None):
     return ["wget --no-check-certificate " + url + "" if dest == None else " " + dest]
@@ -75,7 +77,7 @@ def sudo(cmds):
         cmds[i] = "sudo " + cmds[i]
     return cmds
 
-def chmod(mode, file, options=""):
-    return ["chmod " + options + " " + mode + " " + file]    
+def chmod(mode, file_name, options=""):
+    return ["chmod " + options + " " + mode + " " + file_name]    
     
 

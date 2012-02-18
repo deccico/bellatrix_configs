@@ -1,6 +1,8 @@
 """This configuration holds the list of cmds that are going to be applied to a list of ami's. 
 This is part of the normal Bellatrix process. The new configuration will be burned into a new ami."""
 
+import os
+
 #list of ami's to process with the below cmds
 amis = [
        ["ami-fd589594",  "ubuntu1104-ff36-mysql51-x64"],
@@ -36,19 +38,19 @@ def configureNginx():
             #download and set up Nginx configuration. Basically it will listen in port 80 and forward to port 8000 dynamic content
             + "sudo mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.backup"
             ]
-    cmds += wget("https://bitbucket.org/deccico/django_gunicorn/raw/tip/server/etc/nginx/sites-available/default")
+    cmds += cmds.wget("https://bitbucket.org/deccico/django_gunicorn/raw/tip/server/etc/nginx/sites-available/default")
     cmds.append("sudo cp default /etc/nginx/sites-available/default")
     return cmds
 
 
 #list of cmds to execute
 commands = cmds.install_pip() 
-commands += cmds.pip_install("virtualenv") \
-commands += cmds.install_nginx \
-commands += cmds.createVirtualEnv(env_name) \
+commands += cmds.pip_install("virtualenv") 
+commands += cmds.install_nginx 
+commands += cmds.createVirtualEnv(env) 
 commands += cmds.installPackageInVirtualEnv(env, package="django", verification_command="django-admin.py --version")
 commands += cmds.installPackageInVirtualEnv(env, package="gunicorn")
-commands += cmds.executeInVirtualEnv(env, create_django_project(project_name, dir=env + os.path.sep))
+commands += cmds.executeInVirtualEnv(env, cmds.create_django_project(project_name, dir=env + os.path.sep))
 commands += configureNginx()
 
 #setting up Django app
@@ -64,6 +66,6 @@ commands += cmds.wget("https://bitbucket.org/deccico/django_gunicorn/raw/tip/sta
 #setting up Upstart to automatically launch Django application 
 commands += cmds.wget("https://bitbucket.org/deccico/django_gunicorn/raw/tip/run.sh",
                       "/home/ubuntu/django_app/run.sh")
-commands += cmds.chmod("a+x", django_app_dir + "/run.sh"):
+commands += cmds.chmod("a+x", django_app_dir + "/run.sh")
 commands += cmds.sudo(cmds.wget("https://bitbucket.org/deccico/django_gunicorn/raw/tip/server/etc/init/django_app.conf",
                       "/etc/init/django_app.conf"))

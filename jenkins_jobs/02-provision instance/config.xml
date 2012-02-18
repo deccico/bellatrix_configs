@@ -4,7 +4,14 @@
   <description></description>
   <keepDependencies>true</keepDependencies>
   <properties/>
-  <scm class="hudson.scm.NullSCM"/>
+  <scm class="hudson.plugins.mercurial.MercurialSCM">
+    <source>ssh://hg@bitbucket.org/deccico/bellatrix_configs</source>
+    <modules></modules>
+    <clean>false</clean>
+    <browser class="hudson.plugins.mercurial.browser.BitBucket">
+      <url>https://bitbucket.org/deccico/bellatrix_configs/</url>
+    </browser>
+  </scm>
   <canRoam>true</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -19,11 +26,11 @@
       <selector class="hudson.plugins.copyartifact.StatusBuildSelector"/>
     </hudson.plugins.copyartifact.CopyArtifact>
     <hudson.tasks.Shell>
-      <command>virtualenv --no-site-packages --clear env
+      <command>virtualenv --no-site-packages --clear bellatrix_configs
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>. env/bin/activate
+      <command>. bellatrix_configs/bin/activate
 pip install bellatrix 
 bellatrix --version</command>
     </hudson.tasks.Shell>
@@ -31,8 +38,8 @@ bellatrix --version</command>
       <command>import os
 
 host = open(&quot;start_instance_out&quot;).read().split(&quot;,&quot;)[1].strip()
-cmd = &quot;. env/bin/activate&quot;
-cmd += &quot;&amp;&amp; bellatrix provision %s %s %s&quot; % (&quot;bellatrix-configs/ubuntu_django_nginx_gunicorn.py&quot;, &quot;ubuntu&quot;, host)
+cmd = &quot;. bellatrix_configs/bin/activate&quot;
+cmd += &quot;&amp;&amp; bellatrix provision %s %s %s&quot; % (&quot;bellatrix_configs/ubuntu_django_nginx_gunicorn.py&quot;, &quot;ubuntu&quot;, host)
 print &quot;executing &quot; + cmd
 os.system(cmd)</command>
     </hudson.plugins.python.Python>
