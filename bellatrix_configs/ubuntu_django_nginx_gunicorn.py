@@ -45,30 +45,28 @@ def configureNginx():
 
 #list of cmds to execute
 commands = cmds.install_pip 
-commands += cmds.pip_install("virtualenv") 
-commands += cmds.install_nginx 
-commands += cmds.createVirtualEnv(env) 
-commands += cmds.installPackageInVirtualEnv(env, package="django", verification_command="django-admin.py --version")
-commands += cmds.installPackageInVirtualEnv(env, package="gunicorn")
-commands += cmds.executeInVirtualEnv(env, cmds.create_django_project(project_name, dir_name=env + os.path.sep))
-commands += configureNginx()
+#commands += cmds.pip_install("virtualenv") 
+#commands += cmds.install_nginx 
+#commands += cmds.createVirtualEnv(env) 
+#commands += cmds.installPackageInVirtualEnv(env, package="django", verification_command="django-admin.py --version")
+#commands += cmds.installPackageInVirtualEnv(env, package="gunicorn")
+#commands += cmds.executeInVirtualEnv(env, cmds.create_django_project(project_name, dir_name=env + os.path.sep))
+#commands += configureNginx()
 
 #setting up Django app
-commands += cmds.wget("https://bitbucket.org/deccico/django_gunicorn/raw/tip/django_app/settings.py", "/home/ubuntu/django_app/app/settings.py")
-commands += cmds.wget("https://bitbucket.org/deccico/django_gunicorn/raw/tip/django_app/urls.py", 
-                      django_app_dir + "/app/urls.py")
-commands += cmds.wget("https://bitbucket.org/deccico/django_gunicorn/raw/1587f68db41e/templates/test_static.html",
+commands += cmds.wget("https://bitbucket.org/deccico/django_gunicorn/raw/tip/django_app/settings.py", django_app_dir + "/app/settings.py")
+commands += cmds.wget("https://bitbucket.org/deccico/django_gunicorn/raw/tip/django_app/urls.py", django_app_dir + "/app/urls.py")
+commands += cmds.wget("https://bitbucket.org/deccico/django_gunicorn/raw/1587f68db41e/templates/test_static.html", \
                       django_app_dir + "/templates/test_static.html")
-commands += cmds.wget("https://bitbucket.org/deccico/django_gunicorn/raw/tip/static/django.png",
+commands += cmds.wget("https://bitbucket.org/deccico/django_gunicorn/raw/tip/static/django.png", \
                       django_app_dir + "/static")
 
 
 #setting up Upstart to automatically launch Django application 
-commands += cmds.wget("https://bitbucket.org/deccico/django_gunicorn/raw/tip/run.sh",
-                      "/home/ubuntu/django_app/run.sh")
+commands += cmds.wget("https://bitbucket.org/deccico/django_gunicorn/raw/tip/run.sh", django_app_dir + "/run.sh")
 commands += cmds.chmod("a+x", django_app_dir + "/run.sh")
-commands += cmds.sudo(cmds.wget("https://bitbucket.org/deccico/django_gunicorn/raw/tip/server/etc/init/django_app.conf",
+commands += cmds.sudo(cmds.wget("https://bitbucket.org/deccico/django_gunicorn/raw/tip/server/etc/init/django_app.conf", \
                       "/etc/init/django_app.conf"))
 
-logging.debug("commands generated: %s" % commands)
+logging.info("commands generated: %s" % commands)
 
