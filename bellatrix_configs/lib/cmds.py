@@ -42,18 +42,24 @@ def createVirtualEnv(env_name):
     return ["virtualenv --no-site-packages " + env_name]
 
 def executeInVirtualEnv(env, cmd):
-    logging.info("executeInVE generating the execution of %s in %s" % (cmd, env))
+    if type(cmd) == type(list()):
+        cmd = flatCommands(cmd) 
     return ["source " + env + os.path.sep + "bin" + os.path.sep + "activate && " + cmd] 
 
-def installPackageInVirtualEnv(env, package, verify=True, verification_command=None, prefix=""):
-    cmds = pip_install(package, prefix, verify, verification_command) 
+def flatCommands(cmds):
+    """Given a list of commands returns a single one"""
     cmd = ""
     ampersand = " && "
     #we need to get a single command so it works in the virtual environment
     for c in cmds:
         cmd += c + ampersand 
     cmd = cmd[:len(cmd) - len(ampersand)]   #cut last &&
-    logging.info("installInVE cmd generated: %s" % cmd)
+    return cmd
+
+
+def installPackageInVirtualEnv(env, package, verify=True, verification_command=None, prefix=""):
+    cmds = pip_install(package, prefix, verify, verification_command) 
+    cmd = flatCommands(cmds)
     return executeInVirtualEnv(env, cmd) 
 
 install_pip = [
