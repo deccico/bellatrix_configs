@@ -94,3 +94,7 @@ def mkdir(directory):
 def createSoftLink(src, dest):
     pre_execution = " " if (dest.strip()=="" or None==dest) else "rm -rf" + dest
     return [pre_execution + "ln -s %s %s" % (src, dest)]    
+
+def copy(src, dest):
+    return ["cp -f %s %s" % (src, dest)]    
+    
