@@ -20,7 +20,6 @@ user = "ubuntu"             #user of the ami's
 key_name = "elasticbamboo"          #Name of the key-pair name that will be applied to your instance. 
 security_groups = "elasticbamboo"   #comma separated list (with no spaces) of the security groups that will be applied to the new instance. It can be only one. Usually is. e.g. mysecurity_group
 instance_type = "t1.micro"          #type of instance that will be used for applying the configuration. Usually t1.micro should be enough. List of codes here: http://aws.amazon.com/ec2/instance-types for more
-skip_me = False
 
 #------------------------------------------------------------------------------------------------
 from bellatrix_configs.lib import cmds
