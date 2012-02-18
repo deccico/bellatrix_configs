@@ -70,5 +70,5 @@ commands += cmds.chmod("a+x", django_app_dir + "/run.sh")
 commands += cmds.sudo(cmds.wget("https://bitbucket.org/deccico/django_gunicorn/raw/tip/server/etc/init/django_app.conf",
                       "/etc/init/django_app.conf"))
 
-logging.info("commands generated: %s" % commands)
+logging.debug("commands generated: %s" % commands)
 
