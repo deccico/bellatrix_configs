@@ -59,7 +59,7 @@ commands += cmds.wget("https://bitbucket.org/deccico/django_gunicorn/raw/tip/dja
 commands += cmds.wget("https://bitbucket.org/deccico/django_gunicorn/raw/1587f68db41e/templates/test_static.html", \
                       django_app_dir + "/templates/test_static.html")
 commands += cmds.wget("https://bitbucket.org/deccico/django_gunicorn/raw/tip/static/django.png", \
-                      django_app_dir + "/static")
+                      django_app_dir + "/static/django.png")
 
 
 #setting up Upstart to automatically launch Django application 
