@@ -78,7 +78,7 @@ def create_django_project(project_name, dir_name="." + os.path.sep):
     return ["cd " + dir_name + " && django-admin.py startproject " + project_name]
 
 def wget(url, dest=None):
-    return ["wget --no-check-certificate " + url + ("" if dest == None else " " + dest)]
+    return ["wget --no-check-certificate " + url + ("" if dest == None else " -O " + dest)]
 
 def sudo(cmds):
     for i in range(len(cmds)):
