@@ -17,6 +17,7 @@ Should something happened to the operation, 'cat new_file' will fail.
 Additionally you will be able to verify the content of the file.               
 """
 
+import logging
 import os
 
 #CONSTANTS
@@ -40,6 +41,7 @@ def createVirtualEnv(env_name):
     return ["virtualenv --no-site-packages " + env_name]
 
 def executeInVirtualEnv(env, cmd):
+    logging.info("generating the execution of %s in %s" % (cmd, env))
     return ["source " + env + os.path.sep + "bin" + os.path.sep + "activate && " + cmd] 
 
 def installPackageInVirtualEnv(env, package, verify=True, verification_command=None, prefix=""):
