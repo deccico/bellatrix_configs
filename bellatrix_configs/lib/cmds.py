@@ -38,7 +38,7 @@ def pip_install(package, prefix="sudo", verify=True, verification_command=None):
     return cmds
 
 def createVirtualEnv(env_name):
-    return ["virtualenv --no-site-packages " + env_name]
+    return ["virtualenv --no-site-packages --clear " + env_name]
 
 def executeInVirtualEnv(env, cmd):
     if type(cmd) == type(list()):
@@ -75,7 +75,7 @@ install_nginx = ["sudo add-apt-repository ppa:nginx/stable -y"] \
                 + apt_get_install("nginx")
                 
 def create_django_project(project_name, dir_name="." + os.path.sep):                
-    return ["cd " + dir_name + " && django-admin.py startproject " + project_name]
+    return ["cd " + dir_name + " && rm -rf " + project_name + " && django-admin.py startproject " + project_name]
 
 def wget(url, dest=None):
     return ["wget --no-check-certificate " + url + ("" if dest == None else " -O " + dest)]
