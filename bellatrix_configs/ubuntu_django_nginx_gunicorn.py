@@ -33,9 +33,9 @@ def configureNginx():
     #prepare directories
     commands = ["sudo mkdir -p /opt/django/logs/nginx/"]
     #Create directories and softlinks for static content and templates
-    commands.append("mkdir -p $HOME/django_app/static")
-    commands.append("mkdir -p $HOME/django_app/templates")
-    commands.append("sudo ln -s $HOME/django_app/static /opt/django")
+    commands.append(cmds.mkdir("$HOME/django_app/static"))
+    commands.append(cmds.mkdir("$HOME/django_app/templates"))
+    commands.append(cmds.sudo(cmds.createSoftLink("$HOME/django_app/static", "/opt/django")))
     #download and set up Nginx configuration. Basically it will listen in port 80 and forward to port 8000 dynamic content
     commands.append("sudo mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.backup")
     commands += cmds.wget("https://bitbucket.org/deccico/django_gunicorn/raw/tip/server/etc/nginx/sites-available/default")

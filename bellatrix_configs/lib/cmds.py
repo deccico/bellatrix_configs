@@ -88,4 +88,9 @@ def sudo(cmds):
 def chmod(mode, file_name, options=""):
     return ["chmod " + options + " " + mode + " " + file_name]    
     
+def mkdir(directory):
+    return ["mkdir -p " + directory]    
 
+def createSoftLink(src, dest):
+    pre_execution = " " if (dest.strip()=="" or None==dest) else "rm -rf" + dest
+    return [pre_execution + "ln -s %s %s" % (src, dest)]    
