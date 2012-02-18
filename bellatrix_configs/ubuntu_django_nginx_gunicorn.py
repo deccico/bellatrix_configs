@@ -44,7 +44,7 @@ def configureNginx():
 
 
 #list of cmds to execute
-commands = cmds.install_pip() 
+commands = cmds.install_pip 
 commands += cmds.pip_install("virtualenv") 
 commands += cmds.install_nginx 
 commands += cmds.createVirtualEnv(env) 
