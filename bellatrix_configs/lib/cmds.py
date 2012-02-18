@@ -35,14 +35,14 @@ def pip_install(package, prefix="sudo", verify=True, verification_command=None):
     cmds = [prefix + " pip install " + package + " --upgrade"]
     if verification_command:
         cmds.append(package + " --version" if verification_command == None else verification_command)
-    logging.info("cmd generated: %s" % cmds)
+    logging.info("pip_install cmd generated: %s" % cmds)
     return cmds
 
 def createVirtualEnv(env_name):
     return ["virtualenv --no-site-packages " + env_name]
 
 def executeInVirtualEnv(env, cmd):
-    logging.info("generating the execution of %s in %s" % (cmd, env))
+    logging.info("executeInVE generating the execution of %s in %s" % (cmd, env))
     return ["source " + env + os.path.sep + "bin" + os.path.sep + "activate && " + cmd] 
 
 def installPackageInVirtualEnv(env, package, verify=True, verification_command=None, prefix=""):
@@ -53,7 +53,7 @@ def installPackageInVirtualEnv(env, package, verify=True, verification_command=N
     for c in cmds:
         cmd += c + ampersand 
     cmd = cmd[:len(cmd) - len(ampersand)]   #cut last &&
-    logging.info("cmd generated: %s" % cmd)
+    logging.info("installInVE cmd generated: %s" % cmd)
     return executeInVirtualEnv(env, cmd) 
 
 install_pip = [
