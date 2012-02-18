@@ -24,11 +24,11 @@ import os
 apt_prefix = "export PATH=$PATH:/sbin:/usr/sbin:/usr/local/sbin;export TERM=linux; "
 apt_get_and_options = "sudo /usr/bin/apt-get -q -y -o DPkg::Options::=--force-confold --fix-missing " 
 apt_install = apt_get_and_options + "install "
-apt_get_install = apt_prefix + apt_install 
+apt_get_install_cmd = apt_prefix + apt_install 
 
 
 def apt_get_install(package):
-    return [apt_get_install + package]
+    return [apt_get_install_cmd + package]
 
 def pip_install(package, prefix="sudo", verify=True, verification_command=None):
     cmds = [prefix + " pip install " + package + " --upgrade"]
