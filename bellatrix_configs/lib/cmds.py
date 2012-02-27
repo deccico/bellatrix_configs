@@ -96,4 +96,9 @@ def createSoftLink(src, dest):
 
 def copy(src, dest):
     return ["cp -f %s %s" % (src, dest)]    
-    
+
+def resize_image(device="/dev/sda1"):
+    return ["df -h",
+            "sudo resize2fs %s" % device,
+            "df -h"
+            ]
