@@ -4,50 +4,41 @@
   <description></description>
   <keepDependencies>true</keepDependencies>
   <properties/>
-  <scm class="hudson.plugins.mercurial.MercurialSCM">
-    <source>ssh://hg@bitbucket.org/deccico/bellatrix_configs</source>
-    <modules></modules>
-    <clean>false</clean>
-    <browser class="hudson.plugins.mercurial.browser.BitBucket">
-      <url>https://bitbucket.org/deccico/bellatrix_configs/</url>
-    </browser>
-  </scm>
+  <scm class="hudson.scm.NullSCM"/>
   <canRoam>true</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <authToken>secret0</authToken>
   <triggers class="vector"/>
-  <concurrentBuild>false</concurrentBuild>
+  <concurrentBuild>true</concurrentBuild>
   <builders>
     <hudson.plugins.copyartifact.CopyArtifact>
-      <projectName>01-start instance</projectName>
+      <projectName>01-start_instance</projectName>
       <filter>*_out</filter>
       <target></target>
       <selector class="hudson.plugins.copyartifact.StatusBuildSelector"/>
     </hudson.plugins.copyartifact.CopyArtifact>
     <hudson.tasks.Shell>
-      <command>virtualenv --no-site-packages --clear bellatrix_configs
-</command>
-    </hudson.tasks.Shell>
-    <hudson.tasks.Shell>
-      <command>. bellatrix_configs/bin/activate
-pip install bellatrix 
+      <command>virtualenv --no-site-packages env
+. env/bin/activate
+pip install bellatrix --upgrade 
 bellatrix --version</command>
     </hudson.tasks.Shell>
     <hudson.plugins.python.Python>
-      <command>import os
+      <command>import os, sys
 
-host = open(&quot;start_instance_out&quot;).read().split(&quot;,&quot;)[1].strip()
-cmd = &quot;. bellatrix_configs/bin/activate&quot;
-cmd += &quot;&amp;&amp; bellatrix provision %s %s %s --private_key %s&quot; % (&quot;bellatrix_configs/ubuntu_django_nginx_gunicorn.py&quot;, &quot;ubuntu&quot;, host, &quot;~/.bellatrix/ec2.pk&quot;)
+instance = open(&quot;start_instance_out&quot;).read().split(&quot;,&quot;)[0].strip()
+cmd = &quot;. env/bin/activate&quot;
+cmd += &quot;&amp;&amp; bellatrix burn %s %s&quot; % (instance, &quot;ubuntu_django_nginx_gunicorn_x64&quot;)
 print &quot;executing &quot; + cmd
-os.system(cmd)</command>
+ret = os.system(cmd)
+sys.exit(ret)</command>
     </hudson.plugins.python.Python>
   </builders>
   <publishers>
     <hudson.tasks.BuildTrigger>
-      <childProjects>03-burn instance</childProjects>
+      <childProjects>04-terminate_instance</childProjects>
       <threshold>
         <name>SUCCESS</name>
         <ordinal>0</ordinal>

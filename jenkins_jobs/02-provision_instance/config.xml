@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>true</keepDependencies>
+  <properties/>
+  <scm class="hudson.plugins.mercurial.MercurialSCM">
+    <source>ssh://hg@bitbucket.org/deccico/bellatrix_configs</source>
+    <modules></modules>
+    <clean>false</clean>
+    <browser class="hudson.plugins.mercurial.browser.BitBucket">
+      <url>https://bitbucket.org/deccico/bellatrix_configs/</url>
+    </browser>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers class="vector"/>
+  <concurrentBuild>true</concurrentBuild>
+  <builders>
+    <hudson.plugins.copyartifact.CopyArtifact>
+      <projectName>01-start_instance</projectName>
+      <filter>*_out</filter>
+      <target></target>
+      <selector class="hudson.plugins.copyartifact.StatusBuildSelector">
+        <stable>true</stable>
+      </selector>
+    </hudson.plugins.copyartifact.CopyArtifact>
+    <hudson.tasks.Shell>
+      <command>virtualenv --no-site-packages env
+. env/bin/activate 
+pip install bellatrix --upgrade
+bellatrix --version</command>
+    </hudson.tasks.Shell>
+    <hudson.plugins.python.Python>
+      <command>import os, sys
+
+host = open(&quot;start_instance_out&quot;).read().split(&quot;,&quot;)[1].strip()
+cmd = &quot;. env/bin/activate&quot;
+cmd += &quot;&amp;&amp; bellatrix provision %s %s %s --private_key %s&quot; % (&quot;bellatrix_configs/ubuntu_django_nginx_gunicorn.py&quot;, &quot;ubuntu&quot;, host, &quot;~/.bellatrix/key.pem&quot;)
+print &quot;executing &quot; + cmd
+ret = os.system(cmd)
+sys.exit(ret)</command>
+    </hudson.plugins.python.Python>
+  </builders>
+  <publishers>
+    <hudson.tasks.BuildTrigger>
+      <childProjects>03-burn_instance</childProjects>
+      <threshold>
+        <name>SUCCESS</name>
+        <ordinal>0</ordinal>
+        <color>BLUE</color>
+      </threshold>
+    </hudson.tasks.BuildTrigger>
+  </publishers>
+  <buildWrappers/>
+</project>
