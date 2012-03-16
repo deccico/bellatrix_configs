@@ -11,8 +11,6 @@ amis = [
        ]
 
 #common variables
-burn_ami_at_the_end=True    #decide whether or not burning the images at the end
-skip_me = False             #decide whether to skip or not this configuration
 user = "ubuntu"             #user of the ami's 
 
 #this values will be applied to the instance that is going to be configured with bellatrix bewitch_ami
@@ -22,7 +20,7 @@ security_groups = "default"   #comma separated list (with no spaces) of the secu
 instance_type = "t1.micro"          #type of instance that will be used for applying the configuration. Usually t1.micro should be enough. List of codes here: http://aws.amazon.com/ec2/instance-types for more
 
 #------------------------------------------------------------------------------------------------
-from bellatrix_configs.lib import cmds
+from bellatrix.lib import cmds
 
 env = "django_app"
 project_name = "app"
