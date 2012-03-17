@@ -9,7 +9,6 @@
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <authToken>secret0</authToken>
   <triggers class="vector"/>
   <concurrentBuild>true</concurrentBuild>
   <builders>
@@ -30,7 +29,7 @@ bellatrix --version</command>
 
 instance = open(&quot;start_instance_out&quot;).read().split(&quot;,&quot;)[0].strip()
 cmd = &quot;. env/bin/activate&quot;
-cmd += &quot;&amp;&amp; bellatrix burn %s %s&quot; % (instance, &quot;ubuntu_django_nginx_gunicorn_x64&quot;)
+cmd += &quot;&amp;&amp; bellatrix burn %s %s --wait=true&quot; % (instance, &quot;ubuntu_django_nginx_gunicorn_x64&quot;)
 print &quot;executing &quot; + cmd
 ret = os.system(cmd)
 sys.exit(ret)</command>

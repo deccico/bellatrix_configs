@@ -38,7 +38,7 @@ bellatrix --version</command>
 
 host = open(&quot;start_instance_out&quot;).read().split(&quot;,&quot;)[1].strip()
 cmd = &quot;. env/bin/activate&quot;
-cmd += &quot;&amp;&amp; bellatrix provision %s %s %s --private_key %s&quot; % (&quot;bellatrix_configs/ubuntu_django_nginx_gunicorn.py&quot;, &quot;ubuntu&quot;, host, &quot;~/.bellatrix/key.pem&quot;)
+cmd += &quot;&amp;&amp; bellatrix provision %s %s %s --private_key=%s&quot; % (&quot;bellatrix_configs/ubuntu_django_nginx_gunicorn.py&quot;, &quot;ubuntu&quot;, host, &quot;~/.bellatrix/key.pem&quot;)
 print &quot;executing &quot; + cmd
 ret = os.system(cmd)
 sys.exit(ret)</command>

@@ -1,5 +1,8 @@
 """This configuration holds the list of cmds that are going to be applied to a list of ami's. 
-This is part of the normal Bellatrix process. The new configuration will be burned into a new ami."""
+This is part of the normal Bellatrix process. The new configuration will be burned into a new ami.
+
+The available set of commands can be found in https://bitbucket.org/adeccico/bellatrix/src/tip/bellatrix/lib/cmds.py
+"""
 
 
 import logging
@@ -41,9 +44,9 @@ def configureNginx():
 
 
 #list of cmds to execute
-commands = cmds.install_pip 
+commands = cmds.install_pip() 
 commands += cmds.pip_install("virtualenv") 
-commands += cmds.install_nginx 
+commands += cmds.install_nginx() 
 commands += cmds.createVirtualEnv(env) 
 commands += cmds.installPackageInVirtualEnv(env, package="django", verification_command="django-admin.py --version")
 commands += cmds.installPackageInVirtualEnv(env, package="gunicorn")
