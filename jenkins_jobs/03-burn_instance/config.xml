@@ -32,6 +32,8 @@ cmd = &quot;. env/bin/activate&quot;
 cmd += &quot;&amp;&amp; bellatrix burn %s %s --wait=true&quot; % (instance, &quot;ubuntu_django_nginx_gunicorn_x64&quot;)
 print &quot;executing &quot; + cmd
 ret = os.system(cmd)
+print &quot;exit code: %s&quot; % (ret)
+ret = ret if ret &lt; 256 else 1
 sys.exit(ret)</command>
     </hudson.plugins.python.Python>
   </builders>

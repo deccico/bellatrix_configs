@@ -33,6 +33,8 @@ cmd = &quot;. env/bin/activate&quot;
 cmd += &quot;&amp;&amp; bellatrix terminate %s&quot; % (instance)
 print &quot;executing &quot; + cmd
 ret = os.system(cmd)
+print &quot;exit code: %s&quot; % (ret)
+ret = ret if ret &lt; 256 else 1
 sys.exit(ret)</command>
     </hudson.plugins.python.Python>
   </builders>
