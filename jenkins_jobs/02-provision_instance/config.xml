@@ -41,6 +41,8 @@ cmd = &quot;. env/bin/activate&quot;
 cmd += &quot;&amp;&amp; bellatrix provision %s %s %s --private_key=%s&quot; % (&quot;bellatrix_configs/ubuntu_django_nginx_gunicorn.py&quot;, &quot;ubuntu&quot;, host, &quot;~/.bellatrix/key.pem&quot;)
 print &quot;executing &quot; + cmd
 ret = os.system(cmd)
+print &quot;exit code: %s&quot; % (ret)
+ret = ret if ret &lt; 256 else 1
 sys.exit(ret)</command>
     </hudson.plugins.python.Python>
   </builders>
