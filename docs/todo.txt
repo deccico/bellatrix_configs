@@ -1,8 +1,0 @@
-DONE	- Release 1.0
-DONE	- Cambiar imports a Bellatrix
-DONE 	- Asegurarse que la instancia está finalizada
-x		- Subir docs a readthedocs
-x		- Escribir artículo
-x		- Revisar artículo y postear en HN
-x		- Usar PyLint
-DONE	- Subir Jenkins config al repo
